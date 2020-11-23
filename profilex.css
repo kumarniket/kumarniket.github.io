@@ -4,26 +4,23 @@
 	font-family: 'Cardo', serif;
 }
 
-
 .backImg{
 	width: 100%;
 	height: 100vh;
 	background-color: rgb(80,80,80);
 	background-size: cover;
 	display: flex;
-	align-items: center;
+	align-items: center; 
 	justify-content: center; 
 	text-align: center;
 	color: white;
 }
-
 
 .profileImg{
 	width: 360px;
 	background-color: rgba(0,0,0,0.3);
 	padding: 30px 0;
 	border-radius: 10%;
-
 
 }
 
@@ -53,3 +50,7 @@ i{
 	color: white;
 }
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 15ce321c648a224d9b7b0ed9a89d2a83e1335056
