@@ -20,10 +20,10 @@
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root { 
-  --background-color: #ffffff; /* Background color for the entire website, including individual sections */
-  --default-color: #444444; /* Default color used for the majority of the text content across the entire website */
-  --heading-color: #222222; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #34b7a7; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --background-color: #ffffff; /* Background color #ffffff for the entire website, including individual sections */
+  --default-color: #444444; /* Default color #444444 used for the majority of the text content across the entire website */
+  --heading-color: #222222; /* Color for headings, subheadings #222222 and title throughout the website */
+  --accent-color: #34b7a7; /* Accent color #34b7a7 that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
   --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 }
@@ -41,8 +41,8 @@
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
 
 .light-background {
-  --background-color: #e9e8e6;
-  --surface-color: #ffffff;
+  --background-color: #fffbfb;
+  --surface-color: #fdf6f6;
 }
 
 .dark-background {
@@ -845,6 +845,26 @@ section,
   margin-right: 5px;
   color: var(--accent-color);
   line-height: 0;
+}
+
+.profile-image {
+  max-width: 80%;
+  height: auto;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 5px;
+  /* width: 180px;      /* Adjust width */
+  /* height: 180px;     Adjust height */ 
+  object-fit: cover;
+  border-radius: 50%; /* Makes it circular */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.profile-image:hover {
+  transform: scale(1.07); /* Slightly enlarge on hover */
+  box-shadow: 0 8px 32px rgba(52, 152, 219, 0.25); /* Soft blue glow on hover */
+  cursor: pointer;
 }
 
 /*--------------------------------------------------------------
