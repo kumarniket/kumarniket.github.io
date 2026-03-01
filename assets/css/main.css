@@ -1,15 +1,4 @@
-/**
-* Template Name: Kelly
-* Template URL: https://bootstrapmade.com/kelly-free-bootstrap-cv-resume-html-template/
-* Updated: Aug 07 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
-/*--------------------------------------------------------------
-# Font & Color Variables
-# Help: https://bootstrapmade.com/color-system/
---------------------------------------------------------------*/
 /* Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;500;400&display=swap');
 :root {
@@ -41,8 +30,8 @@
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
 
 .light-background {
-  --background-color: #fffbfb;
-  --surface-color: #fdf6f6;
+  --background-color: rgba(255, 251, 251, 0.85);
+  --surface-color: rgba(253, 246, 246, 0.9);
 }
 
 .dark-background {
@@ -58,12 +47,23 @@
   scroll-behavior: smooth;
 }
 
+/* 3D Background Canvas */
+#bg3d {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  display: block;
+}
+
 /*--------------------------------------------------------------
 # General Styling & Shared Classes
 --------------------------------------------------------------*/
 body {
   color: var(--default-color);
-  background-color: var(--background-color);
+  background-color: transparent;
   font-family: var(--default-font);
 }
 
@@ -145,7 +145,7 @@ h6 {
 --------------------------------------------------------------*/
 .header {
   color: var(--default-color);
-  background-color: var(--background-color);
+  background-color: rgba(255, 251, 251, 0.9);
   padding: 15px 0;
   transition: all 0.5s;
   z-index: 997;
@@ -469,7 +469,7 @@ h6 {
 --------------------------------------------------------------*/
 .footer {
   color: var(--default-color);
-  background-color: var(--background-color);
+  background-color: rgba(255, 251, 251, 0.85);
   font-size: 14px;
   padding: 40px 0;
   position: relative;
@@ -639,7 +639,7 @@ h6 {
 section,
 .section {
   color: var(--default-color);
-  background-color: var(--background-color);
+  background-color: rgba(255, 251, 251, 0.85);
   padding: 60px 0;
   scroll-margin-top: 100px;
   overflow: clip;
