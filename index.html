@@ -77,6 +77,9 @@
       </nav>
 
       <div class="header-social-links">
+        <button id="theme-toggle" class="theme-toggle">
+          <i class="bi bi-moon-fill"></i>
+        </button>
         <a href="https://x.com/itskrniket" target="_blank" class="twitter"><i class="bi bi-twitter-x"></i></a>
         <a href="https://github.com/kumarniket/" target="_blank" class="github"><i class="bi bi-github"></i></a>
         <a href="https://www.instagram.com/krniket/" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
@@ -99,7 +102,7 @@
               Proficient Automation Tester focused on creating reliable and efficient <br> 
               test automation solutions to help deliver high-quality software faster. <br>
             </p>
-            <a href="assets/file/Niket_resume_SDET.pdf" class="btn-get-started">Download CV</a>
+            <button id="download-cv-btn" class="btn-get-started">Download CV</button>
           </div>
         </div>
       </div>
@@ -431,6 +434,17 @@
       let particles = [];
       const MAX_PARTICLES = 200;
 
+      // helper returns a hue appropriate for current theme
+      function getParticleHue() {
+        const theme = document.documentElement.getAttribute('data-theme') || 'light';
+        if (theme === 'dark') {
+          // lime‑white tint for dark mode (hues between 60°–80°)
+          return Math.random() * 20 + 60;
+        }
+        // light mode gets a full rainbow so particles stand out against white
+        return Math.random() * 360;
+      }
+
       class Particle3D {
         constructor() {
           this.reset();
@@ -444,7 +458,7 @@
           this.vy = (Math.random() - 0.5) * 3;
           this.vz = (Math.random() - 0.5) * 4;
           this.size = Math.random() * 4 + 2;
-          this.hue = Math.random() * 80 + 160;
+          this.hue = getParticleHue();
           this.lifeSpan = Math.random() * 100 + 100;
           this.life = this.lifeSpan;
         }
@@ -472,17 +486,23 @@
         }
 
         draw(ctx) {
-          const scale = 400 / (400 + this.z);
+            const scale = 400 / (400 + this.z);
           const x2d = (this.x * scale) + canvas.width / 2;
           const y2d = (this.y * scale) + canvas.height / 2;
           const size2d = this.size * scale;
           
           const opacity = Math.min(1, (this.life / this.lifeSpan) * 1.5);
 
+          // Same visibility settings for both light and dark mode
+          // This ensures the 3D sparkling effect is visible regardless of theme
+          const lightness = 60;   // bright particles visible on any background
+          const shadowLight = 60; // strong glow effect
+          const opacityMult = 0.8; // consistent opacity
+
           ctx.shadowBlur = 20;
-          ctx.shadowColor = `hsla(${this.hue}, 100%, 60%, ${opacity * 0.8})`;
-          
-          ctx.fillStyle = `hsla(${this.hue}, 100%, 55%, ${opacity})`;
+          ctx.shadowColor = `hsla(${this.hue}, 100%, ${shadowLight}%, ${opacity * opacityMult})`;
+
+          ctx.fillStyle = `hsla(${this.hue}, 100%, ${lightness}%, ${opacity * opacityMult})`;
           ctx.beginPath();
           ctx.arc(x2d, y2d, size2d, 0, Math.PI * 2);
           ctx.fill();
@@ -499,9 +519,17 @@
       function animate() {
         try {
           const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-          gradient.addColorStop(0, '#0a0a15');
-          gradient.addColorStop(0.5, '#15091f');
-          gradient.addColorStop(1, '#2d1b69');
+          const theme = document.documentElement.getAttribute('data-theme') || 'light';
+          if (theme === 'dark') {
+            // darker, simpler gradient for dark mode
+            gradient.addColorStop(0, '#000000');
+            gradient.addColorStop(0.5, '#0a0a15');
+            gradient.addColorStop(1, '#1a1a2e');
+          } else {
+            gradient.addColorStop(0, '#0a0a15');
+            gradient.addColorStop(0.5, '#15091f');
+            gradient.addColorStop(1, '#2d1b69');
+          }
 
           ctx.fillStyle = gradient;
           ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -527,6 +555,102 @@
       initParticles();
       animate();
       console.log('✓ 3D background & scroll navigation ready!');
+    })();
+  </script>
+
+  <!-- Download CV Script -->
+  <script>
+    (function initDownloadCV() {
+      const downloadBtn = document.getElementById('download-cv-btn');
+      const cvPath = 'assets/file/Niket_resume_SDET.pdf';
+
+      if (downloadBtn) {
+        downloadBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          // Download the file using fetch
+          fetch(cvPath)
+            .then(response => response.blob())
+            .then(blob => {
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement('a');
+              link.href = url;
+              link.download = 'Niket_resume_SDET.pdf';
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              URL.revokeObjectURL(url);
+            })
+            .catch(err => console.error('Download failed:', err));
+          
+          // Open in new tab for viewing (after small delay)
+          setTimeout(() => {
+            window.open(cvPath, '_blank');
+          }, 500);
+        });
+      }
+    })();
+  </script>
+
+  <!-- Theme Toggle Script -->
+  <script>
+    (function initThemeToggle() {
+      const themeToggle = document.getElementById('theme-toggle');
+      const html = document.documentElement;
+      const THEME_KEY = 'website-theme';
+
+      // Check system preference and saved preference
+      function getSavedTheme() {
+        return localStorage.getItem(THEME_KEY);
+      }
+
+      function getSystemTheme() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      function applyTheme(theme) {
+        if (theme === 'dark') {
+          html.setAttribute('data-theme', 'dark');
+          document.body.classList.add('dark-theme');
+          document.body.classList.remove('light-theme');
+          themeToggle.innerHTML = '<i class="bi bi-sun-fill"></i>';
+          localStorage.setItem(THEME_KEY, 'dark');
+        } else {
+          html.setAttribute('data-theme', 'light');
+          document.body.classList.remove('dark-theme');
+          document.body.classList.add('light-theme');
+          themeToggle.innerHTML = '<i class="bi bi-moon-fill"></i>';
+          localStorage.setItem(THEME_KEY, 'light');
+        }
+      }
+
+      // Initialize theme - default to dark mode
+      const savedTheme = getSavedTheme();
+      const initialTheme = savedTheme || 'dark';
+      applyTheme(initialTheme);
+
+      // Toggle theme on button click
+      themeToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        const currentTheme = html.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
+      });
+
+      // regenerate particles when theme changes so colors update immediately
+      function refreshParticlesForTheme() {
+        if (typeof initParticles === 'function') {
+          initParticles();
+        }
+      }
+      // wrap applyTheme so it also refreshes particles
+      const _apply = applyTheme;
+      applyTheme = function(theme) {
+        _apply(theme);
+        refreshParticlesForTheme();
+      };
+
+      console.log('✓ Theme toggle initialized!');
     })();
   </script>
 
